@@ -187,5 +187,19 @@ public class Test {
 			}
 		});
 	}
+
+	/**
+	 * 多表的级联查询
+	 * @author：zouRongHui	2019年6月18日09:51:16
+	 */
+	@org.junit.Test
+	public void testHql() {
+		//left join有些情况下会报错 Path expected for join! ，原因不清楚，在hibernate5.0版本中有出错过
+//		String hql = "select n from News n left join Employee e on n.id = e.id where e.name='邹荣辉'";
+		String hql = "select n from News n, Employee e where n.id = e.id and e.name='邹荣辉'";
+		javax.persistence.Query query = session.createQuery(hql);
+		List<News> objs = query.getResultList();
+		objs.forEach(obj -> System.out.println(obj));
+	}
 	
 }
